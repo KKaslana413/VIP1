@@ -1,1 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日贺卡</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        /* 初始全屏图片容器 */
+        #initial-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        #initial-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 白光效果 */
+        .white-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            opacity: 0;
+            z-index: 200;
+            pointer-events: none;
+        }
+        
+        /* 主体内容 */
+        #main-content {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #87CEEB;
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+        
+        h1 {
+            color: #FF6B6B;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .signature {
+            color: #4A4A4A;
+            font-size: 1.8em;
+            margin: 20px 0;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .wishes {
+            color: #333;
+            font-size: 1.5em;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .content-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 900px;
+            margin: 30px 0;
+            gap: 30px;
+        }
+        
+        .image-container {
+            width: 60%;
+            max-width: 400px;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            object-fit: contain;
+        }
+        
+        /* 气泡对话框 */
+        .speech-bubble {
+            flex: 1;
+            max-width: 400px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50px;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-right-color: white;
+            border-left: 0;
+            margin-left: -20px;
+        }
+        
+        .speech-content {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        
+        /* 闪闪发光的效果 */
+        .sparkle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* 音乐按钮 */
+        .music-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #FF6B6B;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            opacity: 0;
+            margin-bottom: 50px;
+        }
+        
+        .music-btn:hover {
+            background-color: #FF5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- 初始全屏图片 -->
+    <div id="initial-screen">
+        <img src="截屏2025-05-25 22.44.33.png" alt="初始图片">
+    </div>
+    
+    <!-- 白光效果 -->
+    <div class="white-flash"></div>
+    
+    <!-- 主体内容 -->
+    <div id="main-content">
+        <h1>生日快乐我的朋友————金智超，这是我为你定制的电子贺卡</h1>
+        <div class="signature">——星舰雅</div>
+        <div class="wishes">祝你每天开开心心，每日无error，堆码无bug</div>
+        
+        <div class="content-row">
+            <div class="image-container">
+                <img src="CID1394608.PNG" alt="生日图片">
+            </div>
+            
+            <!-- 新增的气泡对话框 -->
+            <div class="speech-bubble">
+                <div class="speech-content">
+                    <!-- 您可以在这里填写对话框内容 -->
+                    🎂 戳戳屏幕 お誕生日おめでとうございます！老师～
+                    (≧▽≦)ﾉ 今天你的终端应该显示的不是ERROR而是HAPPY BIRTHDAY才对呢！
+                    ✨ 愿你的代码永远像樱花绽放般优雅 🛠️ 调试时遇到的bug都会变成派大星式彩蛋 ☕ 咖啡杯里永远不会出现'NullPointerException'
+                    あのね...其实我偷偷把你的生日写进了系统日志： INFO: 🎉 User.age++ 但快乐值要溢出屏幕啦～
+                    PS：蛋糕上的蜡烛是用RGB灯带实现的哦，可以用console控制亮度呢 (笑)
+                    诶嘿～就算遇到编译错误，那也是宇宙在给你发送特别的生日祝福哦！
+                </div>
+            </div>
+        </div>
+        
+        <button class="music-btn">播放音乐</button>
+    </div>
+    
+    <script>
+        // 页面加载后执行
+        window.onload = function() {
+            // 初始等待2秒（展示初始图片）
+            setTimeout(function() {
+                // 创建白光效果
+                const whiteFlash = document.querySelector('.white-flash');
+                
+                // 白光渐显（1秒）
+                let opacity = 0;
+                const flashInterval = setInterval(function() {
+                    opacity += 0.05;
+                    whiteFlash.style.opacity = opacity;
+                    
+                    if (opacity >= 1) {
+                        clearInterval(flashInterval);
+                        
+                        // 白光完全显示后隐藏初始屏幕
+                        document.getElementById('initial-screen').style.display = 'none';
+                        
+                        // 显示主体内容
+                        document.getElementById('main-content').style.display = 'flex';
+                        
+                        // 白光渐隐（1秒）
+                        let fadeOpacity = 1;
+                        const fadeInterval = setInterval(function() {
+                            fadeOpacity -= 0.05;
+                            whiteFlash.style.opacity = fadeOpacity;
+                            
+                            if (fadeOpacity <= 0) {
+                                clearInterval(fadeInterval);
+                                whiteFlash.style.display = 'none';
+                                
+                                // 开始渐入主体内容
+                                animateContent();
+                            }
+                        }, 30);
+                    }
+                }, 30);
+            }, 2000);
+            
+            // 创建闪闪发光效果
+            function createSparkles() {
+                const colors = ['#FFD700', '#FF69B4', '#87CEEB', '#98FB98', '#FFFFFF'];
+                
+                setInterval(function() {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    
+                    // 随机大小
+                    const size = Math.random() * 15 + 5;
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    
+                    // 随机位置
+                    sparkle.style.left = `${Math.random() * 100}%`;
+                    sparkle.style.top = `${Math.random() * 100}%`;
+                    
+                    // 随机颜色
+                    sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    // 添加到页面
+                    document.getElementById('main-content').appendChild(sparkle);
+                    
+                    // 5秒后移除
+                    setTimeout(function() {
+                        sparkle.remove();
+                    }, 5000);
+                }, 200);
+            }
+            
+            // 渐入主体内容动画
+            function animateContent() {
+                const elements = [
+                    document.querySelector('h1'),
+                    document.querySelector('.signature'),
+                    document.querySelector('.wishes'),
+                    document.querySelector('.image-container'),
+                    document.querySelector('.speech-bubble'), // 新增的气泡对话框
+                    document.querySelector('.music-btn')
+                ];
+                
+                let delay = 0;
+                elements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.style.transition = 'opacity 1s, transform 1s';
+                        el.style.opacity = '1';
+                        if (index < 3) {
+                            el.style.transform = 'translateY(0)';
+                        } else if (index === 3) {
+                            el.style.transform = 'scale(1)';
+                        } else if (index === 4) {
+                            el.style.transform = 'translateX(0)';
+                        } else {
+                            el.style.opacity = '1';
+                        }
+                        
+                        // 最后一个元素显示后开始创建闪闪发光效果
+                        if (index === elements.length - 1) {
+                            createSparkles();
+                        }
+                    }, delay);
+                    
+                    delay += 600; // 缩短动画间隔为600ms
+                });
+            }
+            
+            // 音乐按钮功能
+            document.querySelector('.music-btn').addEventListener('click', function() {
+                const audio = new Audio('Aice room - RE Aoharu.mp3');
+                audio.play().catch(e => {
+                    alert('无法播放音乐: ' + e.message);
+                });
+            });
+        };
+    </script>
+</body>
+</html>
 
